@@ -28,7 +28,9 @@ export default function App() {
   return (
     <SafeAreaView>
       <FlatList
-        data={speakers.filter(s => s.online())}
+        data={speakers
+          .filter(s => s.online())
+          .sort((a, b) => a.name().localeCompare(b.name()))}
         renderItem={({ item }) => <SpeakerInfoView speaker={item} />}
         keyExtractor={sonos => sonos.id()}
       />
