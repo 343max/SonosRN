@@ -26,7 +26,7 @@ export default function App() {
   useEventEmitter(search, "DeviceAvailable", sonos => addSpeaker(sonos));
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <FlatList
         data={speakers
           .filter(s => s.online())
