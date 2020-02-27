@@ -22,13 +22,23 @@ export class Speaker {
     });
 
     sonos.deviceDescription((error, deviceDescription) => {
-      console.log([error, deviceDescription]);
-
       if (deviceDescription) {
         const icon = deviceDescription.iconList.icon[0].url[0];
         this.iconURL = `http://${this.sonos.host}:${this.sonos.port}${icon}`;
       }
     });
+
+    sonos.currentTrack((error, currentTrack) => {
+      console.log(["currentTrack", error, currentTrack]);
+    });
+
+    sonos.getCurrentState((error, currentState) => {
+      console.log("currentState", error, currentState);
+    });
+  }
+
+  online(): boolean {
+    return this.zoneAttributes != null;
   }
 
   id(): string {
