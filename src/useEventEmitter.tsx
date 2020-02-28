@@ -15,7 +15,7 @@ export const useEventEmitter = (
 
     return () => {
       if (subscription.current) {
-        // subscription.current.unsubscribe();
+        subscription.current.removeAllListeners(eventName);
       }
     };
   }, [eventName]);
