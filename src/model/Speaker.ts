@@ -2,11 +2,20 @@ import { Sonos } from "react-native-sonos"
 
 export const sonosId = (sonos: Sonos) => `${sonos.host}:${sonos.port}`
 
+export enum SpeakerState {
+  Stopped = "stopped",
+  Playing = "playing",
+  Paused = "paused",
+  Transitioning = "transitioning",
+  NoMedia = "no_media"
+}
+
 export class Speaker {
   sonos: Sonos
   zoneAttributes?: any
   volume?: number
   iconURL?: string
+  state?: SpeakerState
 
   constructor(sonos: Sonos) {
     this.sonos = sonos
@@ -35,7 +44,7 @@ export class Speaker {
     })
 
     sonos.getCurrentState((error, currentState) => {
-      console.log("currentState", error, currentState)
+      this.state = currentState as SpeakerState
     })
   }
 

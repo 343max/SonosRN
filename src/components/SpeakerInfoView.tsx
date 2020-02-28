@@ -1,17 +1,18 @@
-import React, { useState, useReducer } from "react";
-import { Speaker } from "../model/Speaker";
-import { View, Text, Image } from "react-native";
-import Slider from "@react-native-community/slider";
+import React, { useState, useReducer } from "react"
+import { Speaker } from "../model/Speaker"
+import { View, Text, Image } from "react-native"
+import Slider from "@react-native-community/slider"
+import PlayStateView from "./PlayStateView"
 
 interface SpeakerInfoViewProps {
-  speaker: Speaker;
+  speaker: Speaker
 }
 
 export default function SpeakerInfoView({ speaker }: SpeakerInfoViewProps) {
   const volume = {
     value: speaker.volume ?? 0,
     disabled: speaker.volume === undefined
-  };
+  }
 
   const image = speaker.iconURL ? (
     <Image
@@ -20,28 +21,28 @@ export default function SpeakerInfoView({ speaker }: SpeakerInfoViewProps) {
     />
   ) : (
     <View style={{ width: 60, height: 60 }} />
-  );
+  )
 
   const [currentVolume, setCurrentVolume] = useReducer(
     (
       currentVolume: number,
       { value, threshold }: { value: number; threshold: number }
     ) => {
-      let newVolume = Math.round(value);
+      let newVolume = Math.round(value)
 
       if (Math.abs(value - currentVolume) < threshold) {
-        return currentVolume;
+        return currentVolume
       }
 
-      speaker.sonos.setVolume(newVolume, () => {});
+      speaker.sonos.setVolume(newVolume, () => {})
 
-      return newVolume;
+      return newVolume
     },
     volume.value
-  );
+  )
 
   if (volume.value && currentVolume == 0) {
-    setCurrentVolume({ value: volume.value, threshold: 0 });
+    setCurrentVolume({ value: volume.value, threshold: 0 })
   }
 
   return (
@@ -58,7 +59,20 @@ export default function SpeakerInfoView({ speaker }: SpeakerInfoViewProps) {
     >
       {image}
       <View style={{ flex: 1, marginHorizontal: 10 }}>
-        <Text>{speaker.name()}</Text>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center"
+          }}
+        >
+          <PlayStateView
+            state={speaker.state}
+            style={{ marginRight: 6 }}
+            color="#aaa"
+          />
+          <Text>{speaker.name()}</Text>
+        </View>
         <Slider
           disabled={volume.disabled}
           value={currentVolume}
@@ -72,5 +86,5 @@ export default function SpeakerInfoView({ speaker }: SpeakerInfoViewProps) {
         />
       </View>
     </View>
-  );
+  )
 }
