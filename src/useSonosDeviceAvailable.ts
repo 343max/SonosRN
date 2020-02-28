@@ -4,9 +4,11 @@ import { EventEmitter } from "events"
 
 type SonosDeviceAvailableFN = (sonos: Sonos) => void
 
-export const useSonosDeviceAvailable = (fn: SonosDeviceAvailableFN) => {
+export const useSonosDeviceAvailable = (
+  search: Search,
+  fn: SonosDeviceAvailableFN
+) => {
   useEffect(() => {
-    const search: EventEmitter = new Search({ timeout: 60000 })
     search.addListener("DeviceAvailable", fn)
 
     return () => {
