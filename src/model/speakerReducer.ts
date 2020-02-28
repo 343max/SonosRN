@@ -6,7 +6,7 @@ interface State {
 }
 
 type Action = {
-  type: "AddSpeaker"
+  type: "AddSonosSpeaker"
   sonos: Sonos
 }
 
@@ -14,7 +14,7 @@ export const initialState: State = { speakers: [] }
 
 export const reduceSpeakers = (state: State, action: Action): State => {
   switch (action.type) {
-    case "AddSpeaker":
+    case "AddSonosSpeaker":
       const sonos = action.sonos
       const speakers = state.speakers
         .filter(item => item.id() != sonosId(sonos))

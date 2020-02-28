@@ -9,7 +9,7 @@ export default function App() {
   const [state, dispatch] = useReducer(reduceSpeakers, initialState)
 
   const addSpeaker = (sonos: Sonos) => {
-    dispatch({ type: "AddSpeaker", sonos })
+    dispatch({ type: "AddSonosSpeaker", sonos })
   }
 
   useSonosDeviceAvailable(addSpeaker)
